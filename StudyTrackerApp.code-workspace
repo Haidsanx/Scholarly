@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "StudyTrackerApp",
+		"liveServer.settings.port": 5501
+	}
+}

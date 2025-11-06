@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Edit Session</title>
+  <link rel="stylesheet" href="/static/css/dashboard.css">
+</head>
+<body>
+  <main style="max-width:500px;margin:32px auto;background:#fff;padding:24px;border-radius:8px;">
+    <h2>Edit Study Session</h2>
+    <form method="post">
+      <label>Subject:<br>
+        <input type="text" name="subject" value="{{ session['subject'] }}" required>
+      </label><br><br>
+      <label>Duration (minutes):<br>
+        <input type="number" name="duration" value="{{ session['duration'] }}" required>
+      </label><br><br>
+      <label>Notes:<br>
+        <textarea name="notes">{{ session['notes'] }}</textarea>
+      </label><br><br>
+      <button type="submit" class="button-like">Save Changes</button>
+      <a href="{{ url_for('study_logs') }}" class="button-like" style="background:#888;">Cancel</a>
+    </form>
+  </main>
+</body>
+</html>

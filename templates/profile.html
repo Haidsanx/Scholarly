@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Profile - Study Tracker</title>
+  <link rel="stylesheet" href="/static/css/dashboard.css" type="text/css">
+</head>
+<body>
+  <header>
+    <h1>User Profile</h1>
+    <p>Profile summary for {{ user['username'] }}</p>
+  </header>
+  <main>
+    <section>
+      <div style="max-width:400px;margin:0 auto;background:#fff;border-radius:16px;box-shadow:0 2px 12px #0002;padding:32px 24px;display:flex;flex-direction:column;align-items:center;gap:18px;">
+        {% if user.profile_pic %}
+          <img src="/{{ user.profile_pic }}" alt="Profile" style="width:120px;height:120px;border-radius:50%;border:2px solid #a57949;box-shadow:0 0 8px #a57949;" />
+          <h2 style="margin:12px 0 0 0;">{{ user['username'] }}</h2>
+        {% else %}
+          <h2 style="margin-bottom:0;">{{ user['username'] }}</h2>
+        {% endif %}
+        <span style="background:#a57949;color:#fff;padding:4px 16px;border-radius:12px;font-weight:600;">Beta Tester</span>
+        <ul style="list-style:none;padding:0;margin:0;width:100%;text-align:left;">
+          <li><strong>Email:</strong> {{ user['email'] }}</li>
+          <li><strong>Join Date:</strong> {{ user['created_at'] if 'created_at' in user.keys() else 'N/A' }}</li>
+          <li><strong>Goal (minutes per day):</strong> {{ user['goal'] }}</li>
+        </ul>
+        <div style="margin-top:18px;width:100%;text-align:center;">
+          <a href="{{ url_for('dashboard') }}" class="button-like" style="margin-right:12px;">Back to dashboard</a>
+          <a href="{{ url_for('account_settings') }}" class="button-like" style="background:#a57949;">Account Settings</a>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

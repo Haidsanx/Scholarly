@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Verification</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Login Verification</h2>
+        <p>A verification code was sent to your email for username <strong>{{ username }}</strong>. Please enter it below:</p>
+        <form method="POST">
+            <input type="text" name="code" placeholder="Enter verification code" required>
+            <label>
+                <input type="checkbox" name="remember_me"> Remember Me
+            </label>
+            <button type="submit" class="button-like">Verify & Login</button>
+        </form>
+        <a href="{{ url_for('login') }}" class="button-like">Back to Login</a>
+    </div>
+</body>
+</html>

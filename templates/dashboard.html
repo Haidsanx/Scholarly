@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Tracker</title>
+    <link rel="icon" href="/static/css/images/study_tracker.png" type="image/x-icon">
+    <link rel="stylesheet" href="/static/css/dashboard.css" type="text/css">
+</head>
+<body>
+    <header>
+        <h1>Welcome to your Study Tracker dashboard</h1>
+        <p>Track your study sessions and achieve your learning goals!</p>
+    
+    <div class="profile-menu" id="profileMenu">
+      {% if user and (user.profile_pic or user['profile_pic']) %}
+        <img src="/{{ user.profile_pic if user.profile_pic else user['profile_pic'] }}" alt="Profile" class="profile-icon" id="profileIcon">
+      {% else %}
+        <img src="/static/css/images/logged_in.jpg.png" alt="Profile" class="profile-icon" id="profileIcon">
+      {% endif %}
+      <ul class="dropdown-menu" id="dropdownMenu">
+        <li><a class="button-like" href="{{ url_for('profile') }}">View Profile</a></li>
+        <li><a class="button-like" href="{{ url_for('account_settings') }}">Account Settings</a></li>
+        <li><a class="button-like" href="{{ url_for('study_logs') }}">My Study Logs</a></li>
+        <li><a class="button-like" href="{{ url_for('logout') }}">Logout</a></li>
+      </ul>
+    </div>
+        <hr>
+    </header>
+    <main>
+    <div class="dashboard-summary" style="display:flex;gap:20px;justify-content:center;margin:18px 0;">
+      <div class="summary-card">
+        <h3>Sessions</h3>
+        <p style="font-size:24px;font-weight:700;color:#fff;">{{ session_count }}</p>
+      </div>
+      <div class="summary-card">
+        <h3>Total Minutes</h3>
+        <p style="font-size:24px;font-weight:700;color:#fff;">{{ total_minutes }}</p>
+      </div>
+      <div class="summary-card">
+  <h3>Export</h3>
+  <a href="{{ url_for('export_sessions') }}" class="button-like" style="margin-top:8px;">Export Data</a>
+      </div>
+    </div>
+
+    <section style="max-width:900px;margin:0 auto;text-align:left;">
+      <h3>Recent Sessions</h3>
+      {% if sessions and sessions|length > 0 %}
+        <table style="width:100%;border-collapse:collapse;color:#000;background:#fff;padding:8px;border-radius:8px;">
+          <thead>
+            <tr>
+              <th style="padding:8px;border-bottom:1px solid #ddd;">Date</th>
+              <th style="padding:8px;border-bottom:1px solid #ddd;">Subject</th>
+              <th style="padding:8px;border-bottom:1px solid #ddd;">Duration</th>
+              <th style="padding:8px;border-bottom:1px solid #ddd;">Notes</th>
+              <th style="padding:8px;border-bottom:1px solid #ddd;">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for s in sessions %}
+            <tr>
+              <td style="padding:8px;border-bottom:1px solid #eee;">{{ s['date'] if 'date' in s.keys() else (s['created_at'] if 'created_at' in s.keys() else '-') }}</td>
+              <td style="padding:8px;border-bottom:1px solid #eee;">{{ s['subject'] }}</td>
+              <td style="padding:8px;border-bottom:1px solid #eee;">{{ s['duration'] }} min</td>
+              <td style="padding:8px;border-bottom:1px solid #eee;">{{ s['notes'] }}</td>
+              <td style="padding:8px;border-bottom:1px solid #eee;">
+                <a href="{{ url_for('edit_session', session_id=s['id']) }}" class="button-like" style="margin-right:8px;">Edit</a>
+                <a href="{{ url_for('delete_session', session_id=s['id']) }}" class="button-like" style="background:#c0392b;">Delete</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <p>No study sessions yet. Use the form below to add one.</p>
+      {% endif %}
+    </section>
+
+    <hr style="margin:24px 0;border-color:#fff;opacity:0.6;">
+
+    <h2>Add a Study Session</h2>
+<form action="{{ url_for('add_session') }}" method="POST">
+    <label for="subject">Subject:</label>
+    <input type="text" name="subject" id="subject" required>
+
+    <label for="duration">Duration (minutes):</label>
+    <input type="number" name="duration" id="duration" required>
+
+    <label for="notes">Notes:</label>
+    <textarea name="notes" id="notes"></textarea>
+
+  <button type="submit" class="button-like">Add Session</button>
+</form>
+    <section>
+        <h4>Return to home</h4>
+            <a href="{{ url_for('home') }}"><button class="button-like">Main Menu</button></a>
+    </section>
+    </main>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+  const profileMenu = document.getElementById('profileMenu');
+  const profileIcon = document.getElementById('profileIcon');
+
+  // Toggle dropdown when clicking the profile icon
+  profileIcon.addEventListener('click', function(e) {
+    e.stopPropagation();
+    profileMenu.classList.toggle('open');
+  });
+
+  // Close dropdown if clicking anywhere else
+  document.addEventListener('click', function(e) {
+    if (!profileMenu.contains(e.target)) {
+      profileMenu.classList.remove('open');
+    }
+  });
+});
+</script>
+</body>
+</html>

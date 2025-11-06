@@ -1,0 +1,97 @@
+body{
+    font-family: Arial, sans-serif;
+    background: linear-gradient(270deg, #f5a25d, #a57949, #ffbe76);
+    background-size: 400% 400%;
+    animation: backgroundShift 20s ease infinite;
+    background-color: #a57949;
+    color: white;
+    margin: 5;
+    padding: 5;
+    text-align: center;
+}
+
+.profile-menu {
+  position: relative;
+  display: inline-block;
+}
+
+.profile-icon {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid black;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  right: -110px;
+  top: calc(100% + 8px);
+  background-color: #ffbe76;
+  border: 2px solid #ffffff;
+  border-radius: 8px;
+  min-width: 180px;
+  padding: 6px 0;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+  z-index: 1000;
+  text-align: center;
+}
+
+.profile-menu.open .dropdown-menu {
+  display: block;
+  text-align: center;
+}
+
+.dropdown-menu li {
+  list-style: none;
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 10px 14px;
+  text-decoration: none;
+  color: #000;
+  font-weight: 500;
+}
+
+.dropdown-menu a:hover {
+  background-color: #f0d9b5;
+}
+
+
+/* Universal button-like style for all buttons and links */
+.button-like, a.button-like, button.button-like {
+  background-color: #996633;
+  color: white !important;
+  margin: 6px 12px;
+  border-top: 2px dashed white;
+  border-bottom: 2px dashed white;
+  border-right: 2px solid #ebebcf;
+  border-left: 2px solid #ebebcf;
+  border-radius: 5px;
+  display: inline-block;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 8px 18px;
+  transition: background 0.2s;
+  cursor: pointer;
+}
+
+.button-like:hover, a.button-like:hover, button.button-like:hover {
+  background-color: #7f4f2a;
+  color: #fff !important;
+}
+
+button {
+    background-color: #996633;
+    color: white;
+    padding: 5px 10px;
+    border-top: 2px dashed white;
+    border-bottom: 2px dashed white;
+    border-right: 2px solid #ebebcf;
+    border-left: 2px solid #ebebcf;
+    border-radius: 5px;
+    cursor:crosshair;
+}
+

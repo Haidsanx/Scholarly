@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Tracker</title>
+    <link rel="icon" href="/static/css/images/study_tracker.png" type="image/x-icon" width="40px" height="400px">
+    <link rel="stylesheet" href="/static/css/style.css" type="text/css">
+    <style>
+        .flash-message {
+            background-color: #e1f5e1;
+            border: 1px solid #4caf50;
+            color: #2e7d32;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .error-message {
+            background-color: #fdecea;
+            border: 1px solid #f44336;
+            color: #c62828;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            text-align: center;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="heading"></div>
+        <h1>Ready to Learn Again?</h1>
+        <p>Access your dashboard to track your study sessions, monitor progress, and reach your goals faster!</p>
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="{{ 'error-message' if category == 'danger' else 'flash-message' }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+    </header>
+    <main>
+        <section>
+            <h2>Login</h2>
+            <form id="loginForm" action="{{ url_for('login') }}" method="post">
+                                <label for="username">Username:</label>
+                                <input type="text" id="username" name="username" required>
+                                <label for="password">Password:</label>
+                                <input type="password" id="password" name="password" required>
+                                <button type="submit">Login</button>
+            </form>
+            <img src="/static/css/images/image15.jpeg" alt="studying at desk" width="200">
+            <!-- Allow the form to submit normally so the server can authenticate and set the session. -->
+        </section>
+    <section>
+        <h3>Return to home</h3>
+        <a href="{{ url_for('home') }}"><button>Main Menu</button></a>
+    </section>
+    </main>
+<footer>Built with ☕for productive minds | Version 1.0</footer>
+</body>
+</html>
+            

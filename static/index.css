@@ -1,0 +1,202 @@
+body{
+    font-family: Arial, sans-serif;
+    background: linear-gradient(270deg, #f5a25d, #a57949, #ffbe76);
+    background-size: 400% 400%;
+    animation: backgroundShift 20s ease infinite;
+    background-color: #a57949;
+    color: white;
+    margin: 5;
+    padding: 5;
+}
+
+@keyframes backgroundShift {
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
+}
+.welcome {
+  text-align: center;
+  margin-top: 20vh;
+}
+
+.welcome h1 {
+  font-size: 2.5rem;
+  letter-spacing: 1px;
+  animation: fadeIn 2s ease-in;
+}
+
+.welcome p {
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(-10px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+button {
+    background-color: #996633;
+    color: white;
+    padding: 5px 10px;
+    border-top: 2px dashed white;
+    border-bottom: 2px dashed white;
+    border-right: 2px solid #ebebcf;
+    border-left: 2px solid #ebebcf;
+    border-radius: 5px;
+    cursor:crosshair;
+}
+
+.stage {
+    width: min(1000px, 95vw);
+    height: 60vh;
+    margin: 24px;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(#996633, #FFFFFF);
+}
+.draggable {
+    position:absolute;
+    cursor:grabbing;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+
+/* Bookshelf container */
+.bookshelf-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  perspective: 800px;
+}
+
+/* Each shelf */
+.shelf {
+  position: relative;
+  width: 700px;
+  height: 70px;
+  background: linear-gradient(180deg, #a97142, #8b5a2b);
+  border: 4px solid #3d2b1f;
+  border-radius: 6px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25), inset 0 2px 0 rgba(255,255,255,0.3);
+}
+
+/* Books on each shelf */
+.book {
+  position: absolute;
+  bottom: 10px;
+  width: 35px;
+  height: 160px;
+  border-radius: 4px;
+  border: 2px solid #222;
+  transform: translateY(-250px);
+  animation: placeBook 1s ease forwards;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+button i, .menu-item i {
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+button:hover i {
+  transform: scale(1.15);
+  color: #fff3d2;
+}
+/* Color palette for variety */
+.book:nth-child(1)  { background: #d62828; left: 40px;  animation-delay: 0.3s; }
+.book:nth-child(2)  { background: #457b9d; left: 90px;  animation-delay: 0.8s; }
+.book:nth-child(3)  { background: #2a9d8f; left: 140px; animation-delay: 1.3s; }
+.book:nth-child(4)  { background: #e9c46a; left: 190px; animation-delay: 1.8s; }
+.book:nth-child(5)  { background: #f4a261; left: 240px; animation-delay: 2.3s; }
+.book:nth-child(6)  { background: #e76f51; left: 290px; animation-delay: 2.8s; }
+.book:nth-child(7)  { background: #9d4edd; left: 340px; animation-delay: 3.3s; }
+.book:nth-child(8)  { background: #118ab2; left: 390px; animation-delay: 3.8s; }
+.book:nth-child(9)  { background: #06d6a0; left: 440px; animation-delay: 4.3s; }
+.book:nth-child(10) { background: #ffb703; left: 490px; animation-delay: 4.8s; }
+
+/* Spine titles */
+.book::after {
+  content: attr(data-title);
+  position: absolute;
+  left: 50%;
+  bottom: 50%;
+  transform: translateX(-50%) rotate(-90deg);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  opacity: 0;
+  animation: fadeIn 0.5s ease forwards;
+  animation-delay: inherit;
+}
+
+.book:hover {
+  transform: translateY(-50px) rotate(90deg);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Animation: books slide into place */
+@keyframes placeBook {
+  0% { transform: translateY(-300px) rotate(-8deg); opacity: 0; }
+  60% { transform: translateY(15px) rotate(3deg); opacity: 1; }
+  100% { transform: translateY(0) rotate(0deg); opacity: 1; }
+}
+
+/* Fade in text */
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+/* Optional: slight shadow behind the whole bookshelf */
+.bookshelf-container::after {
+  content: "";
+  position: absolute;
+  width: 740px;
+  height: 420px;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+  z-index: -1;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+}
+
+.shelf-line {
+  width: 100%;
+  height: 8px;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.25), transparent);
+  position: absolute;
+  bottom: 4px;
+  left: 0;
+  z-index: 1;
+  border-radius: 2px;
+}
+.image {
+  position: absolute;
+  margin-top: 40px;
+  margin-left: -200px;
+  align-items: center;
+  align-content: center;
+  cursor: grab;
+}
+
+.quote {
+  text-align: center;
+  font-style: italic;
+  margin-top: 20px;
+  opacity: 0.8;
+}
+
+footer {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  text-align: center;
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+

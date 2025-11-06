@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Tracker</title>
+    <link rel="icon" href="/static/css/images/study_tracker.png" type="image/x-icon" width="40px" height="400px">
+    <link rel="stylesheet" href="/static/index.css" type="text/css">
+    
+</head>
+<body>
+    <header>
+        <div class="welcome">
+        <h1>Welcome to the Study Tracker</h1>
+        <p>Track your study sessions and achieve your learning goals!</p>
+        <p class="quote" id="quote"></p>
+        
+        <script>
+            const quotes = [
+                "Discipline beats motivation.",
+                "Consistency is key.",
+                "Small steps lead to big results.",
+                "Focus on progress, not perfection."
+            ];
+
+            let index =0;
+            const quoteElement = document.getElementById("quote")
+
+            function showNextQuote () {
+                quoteElement.textContent = quotes[index];
+                index = (index + 1) % quotes.length;
+            }
+
+            showNextQuote();
+            setInterval(showNextQuote, 4000);
+        </script>
+        <div class="buttons">
+                   <section>
+            <h2>Main Menu:</h2>
+                <a href="{{ url_for('register') }}"><button>Register</button></a>
+                <a href="{{ url_for('login') }}"><button>Login</button></a>
+            <img src="/static/css/images/image1.jpeg" alt="exam_season" width="300px" class="image">
+            </section>
+        </div>
+        </div>
+    </header>
+    <main>
+        <div class="bookshelf">
+            <div class="book" data-title="Biochem"></div>
+            <div class="book" data-title="Genetics"></div>
+            <div class="book" data-title="Organic"></div>
+            <div class="book" data-title="Neuro"></ div>
+            <div class="book" data-title="Enzymes"></div>
+            <div class="book" data-title="Lab Notes"></div>
+            <div class="book" data-title="Cell Bio"></div>
+            <div class="book" data-title="Microbiology"></div>
+            <div class="book" data-title="Pharmacology"></div>
+            <div class="book" data-title="Metabolism"></div>
+            <div class="book" data-title="Structural Bio"></div>
+            <div class="book" data-title="Physiology"></div>
+        </div>
+    <div class="shelf-line"></div>
+    </main>
+<footer>Built with ☕for productive minds | Version 1.0</footer>
+</body>
+</html>

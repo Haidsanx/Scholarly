@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Tracker</title>
+    <link rel="icon" href="/static/css/images/study_tracker.png" type="image/x-icon" width="40px" height="400px">
+       <link rel="stylesheet" href="/static/css/style.css" type="text/css">
+    <style>
+        .flash-message {
+            background-color: #e1f5e1;
+            border: 1px solid #4caf50;
+            color: #2e7d32;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .error-message {
+            background-color: #fdecea;
+            border: 1px solid #f44336;
+            color: #c62828;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="heading"></div>
+        <h1>Create your account</h1>
+        <p>Gain access to your personal dashboard, where you can log study sessions, track progress, and stay motivated to reach your goals.</p>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="{{ 'error-message' if category == 'danger' else 'flash-message' }}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    </header>
+    <main>
+        <section>
+            <form id="registerForm" action="{{ url_for('register') }}" method="POST">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+
+                <button type="button" id="nextBtn">Next</button>
+                <div id="confirmSection" class="hidden">
+        <label for="confirm_password">Confirm Password:</label>
+        <input type="password" id="confirm_password" name="confirm_password" required>
+        <button type="submit" id="registerBtn">Register</button>
+    </div>
+                <p>Already have an account? Login here:
+                    <button onclick="location.href='{{ url_for('login') }}'">Login</button>
+                </p>
+            </form>
+        </section>
+    <section>
+        <img src="/static/css/images/desk_study.jpeg" class="image" alt="Studying aesthetic">
+        <h2>Return to home</h2>
+            <button onclick="location.href='{{ url_for('home') }}'">Main Menu</button>
+    </section>
+    </main>
+<script>
+document.getElementById('nextBtn').addEventListener('click', function() {
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value.trim();
+
+    if (!username || !password) {
+        alert("Please fill in both username and password before continuing.");
+        return;
+    }
+
+    // Hide the Next button
+    this.style.display = 'none';
+
+    // Reveal confirm section
+    document.getElementById('confirmSection').classList.remove('hidden');
+});
+</script>
+<footer>Built with ☕for productive minds | Version 1.0</footer>
+</body>
+</html>
+                

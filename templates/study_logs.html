@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>My Study Logs - Study Tracker</title>
+  <link rel="stylesheet" href="/static/css/dashboard.css" type="text/css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    .chart-container { max-width:800px;margin:0 auto;padding:12px;background:#fff;border-radius:8px;color:#000 }
+    .progress-bar { background:#eee;border-radius:8px;height:24px;overflow:hidden }
+    .progress-fill { height:100%; background:#4caf50; text-align:center; color:#fff }
+    form.filter-form { display:flex; gap:12px; justify-content:center; margin-bottom:12px }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>My Study Logs</h1>
+    <p>Sessions for {{ user['username'] }}</p>
+  </header>
+  <main>
+    <form class="filter-form" method="get" action="{{ url_for('study_logs') }}">
+      <label>Subject:
+  <select name="subject" style="border:2px solid #996633;border-radius:5px;padding:6px 12px;background:#ffbe76;color:#7f4f2a;font-weight:500;cursor:pointer;">
+          <option value="">All</option>
+          {% for subj in subjects %}
+            <option value="{{ subj }}" {% if selected_subject==subj %}selected{% endif %}>{{ subj }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label>Start Date:
+  <select name="start_date" style="border:2px solid #996633;border-radius:5px;padding:6px 12px;background:#ffbe76;color:#7f4f2a;font-weight:500;cursor:pointer;">
+          <option value="">Any</option>
+          {% for d in session_dates %}
+            <option value="{{ d }}" {% if selected_start_date==d %}selected{% endif %}>{{ d }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label>End Date:
+  <select name="end_date" style="border:2px solid #996633;border-radius:5px;padding:6px 12px;background:#ffbe76;color:#7f4f2a;font-weight:500;cursor:pointer;">
+          <option value="">Any</option>
+          {% for d in session_dates %}
+            <option value="{{ d }}" {% if selected_end_date==d %}selected{% endif %}>{{ d }}</option>
+          {% endfor %}
+        </select>
+      </label>
+  <button type="submit" class="button-like" style="margin:12px 0 0 0;display:inline-block;">Apply Filter</button>
+    </form>
+
+    <div style="display:flex;gap:24px;justify-content:center;align-items:flex-start;flex-wrap:wrap;">
+      <div class="chart-container" style="flex:1 1 400px;min-width:320px;max-width:600px;">
+        <h3>Study time trend</h3>
+        <canvas id="lineChart" width="600" height="240"></canvas>
+      </div>
+      <div class="chart-container" style="flex:1 1 320px;min-width:240px;max-width:400px;">
+        <h3>Subject distribution</h3>
+        <canvas id="pieChart" width="320" height="240"></canvas>
+      </div>
+    </div>
+
+    <div class="chart-container" style="margin-top:12px;">
+      <h3>Progress</h3>
+      <div class="progress-bar" aria-label="progress">
+        <div class="progress-fill" style="width: {{ progress_percent }}%;">{{ progress_percent }}%</div>
+      </div>
+      <p>{{ total_minutes }} minutes out of {{ goal_total }} goal for the selected range.</p>
+    </div>
+
+    <section style="max-width:900px;margin:18px auto;text-align:left;">
+      <h3>All Sessions (filtered)</h3>
+      {% if sessions and sessions|length > 0 %}
+        <table style="width:100%;border-collapse:collapse;color:#000;background:#fff;padding:8px;border-radius:8px;">
+          <thead>
+            <tr>
+              <th style="padding:8px;border-bottom:1px solid #ddd;">Date</th>
+              <th style="padding:8px;border-bottom:1px solid #ddd;">Subject</th>
+              <th style="padding:8px;border-bottom:1px solid #ddd;">Duration</th>
+              <th style="padding:8px;border-bottom:1px solid #ddd;">Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for s in sessions %}
+              <tr>
+                <td style="padding:8px;border-bottom:1px solid #eee;">{{ s['date'] if 'date' in s.keys() else (s['created_at'] if 'created_at' in s.keys() else '-') }}</td>
+                <td style="padding:8px;border-bottom:1px solid #eee;">{{ s['subject'] }}</td>
+                <td style="padding:8px;border-bottom:1px solid #eee;">{{ s['duration'] }} min</td>
+                <td style="padding:8px;border-bottom:1px solid #eee;">{{ s['notes'] }}</td>
+                <td style="padding:8px;border-bottom:1px solid #eee;">
+                  <a href="{{ url_for('edit_session', session_id=s['id']) }}" class="button-like" style="padding:2px 8px;font-size:0.95em;">Edit</a>
+                  <a href="{{ url_for('delete_session', session_id=s['id']) }}" class="button-like" style="padding:2px 8px;font-size:0.95em;background:#c0392b;">Delete</a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <p>No study sessions found in this range.</p>
+        <form action="{{ url_for('add_session') }}" method="get" style="text-align:center;margin-top:12px;">
+          <button type="submit" class="button-like">Add a session</button>
+        </form>
+      {% endif %}
+    </section>
+
+  <p style="text-align:center;margin-top:12px;"><a href="{{ url_for('dashboard') }}" class="button-like">Back to dashboard</a></p>
+
+  </main>
+
+  <script>
+  const labels = JSON.parse('{{ labels_json | safe }}');
+  const lineData = JSON.parse('{{ line_data_json | safe }}');
+  const pieLabels = JSON.parse('{{ pie_labels_json | safe }}');
+  const pieData = JSON.parse('{{ pie_data_json | safe }}');
+
+    // Line chart
+    const ctx = document.getElementById('lineChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Minutes',
+          data: lineData,
+          borderColor: '#996633',
+          backgroundColor: 'rgba(153,102,51,0.2)'
+        }]
+      },
+      options: { responsive: true }
+    });
+
+    // Pie chart
+    const pctx = document.getElementById('pieChart').getContext('2d');
+    new Chart(pctx, {
+      type: 'pie',
+      data: {
+        labels: pieLabels,
+        datasets: [{ data: pieData, backgroundColor: ['#a57949','#ffbe76','#f0d9b5','#996633','#7f4f2a'] }]
+      },
+      options: { responsive: true }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading...</title>
+    <meta http-equiv="refresh" content="2;url={{ url_for('dashboard') }}">
+    <link rel="icon" href="/static/css/images/study_tracker.png" type="image/x-icon">
+    <link rel="stylesheet" href="/static/css/loading.css" type="text/css">
+</head>
+<body class="loading-screen">
+    <h1>Loading...</h1>
+<div id="progressBar"></div>
+
+<script>
+let width = 0;
+let progress = document.getElementById("progressBar");
+
+let interval = setInterval(() => {
+    if (width >= 100) {
+        clearInterval(interval);
+        // Use Flask url_for to generate the dashboard URL
+        window.location.href = "{{ url_for('dashboard') }}";
+    } else {
+        width++;
+        progress.style.width = width + "%";
+        progress.style.background = "#a57949";
+        progress.style.height = "20px";
+    }
+}, 30);
+</script>
+ 
+<footer>Built with ☕for productive minds | Version 1.0</footer>
+</body>
+</html>

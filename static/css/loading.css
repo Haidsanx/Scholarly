@@ -1,0 +1,85 @@
+body{
+    font-family: Arial, sans-serif;
+    background: linear-gradient(270deg, #f5a25d, #a57949, #ffbe76);
+    background-size: 400% 400%;
+    animation: backgroundShift 20s ease infinite;
+    background-color: #a57949;
+    color: white;
+    margin: 5;
+    padding: 5;
+}
+
+@keyframes backgroundShift {
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
+}
+.welcome {
+  text-align: center;
+  margin-top: 20vh;
+}
+
+.welcome h1 {
+  font-size: 2.5rem;
+  letter-spacing: 1px;
+  animation: fadeIn 2s ease-in;
+}
+
+.welcome p {
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(-10px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+.stage {
+    width: min(1000px, 95vw);
+    height: 60vh;
+    margin: 24px;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(#996633, #FFFFFF);
+}
+
+.loading-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #a57949;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  flex-direction: column;
+}
+
+.progress-bar {
+  width: 300px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+.progress {
+  height: 100%;
+  width: 0;
+  background: white;
+  transition: width 0.1s ease;
+}
+
+
+footer {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  text-align: center;
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+

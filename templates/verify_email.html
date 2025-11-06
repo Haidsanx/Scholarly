@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Email Verification</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Email Verification</h2>
+        <p>A verification code was sent to <strong>{{ email }}</strong>. Please enter it below:</p>
+        <form method="POST">
+            <input type="text" name="code" placeholder="Enter verification code" required>
+            <button type="submit" class="button-like">Verify</button>
+        </form>
+        <a href="{{ url_for('register') }}" class="button-like">Back to Register</a>
+    </div>
+</body>
+</html>
