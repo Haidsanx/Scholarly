@@ -10,7 +10,7 @@ from datetime import datetime, timedelta
 
 # Define Flask app object
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Replace with a secure key
+app.secret_key = os.environ.get('FLASK_SECRET_KEY', 'replace_this_with_a_secure_key')  # Set a secure key in environment
 
 # Helper function to get study sessions for a user
 def get_study_sessions_for_user(conn, user):
