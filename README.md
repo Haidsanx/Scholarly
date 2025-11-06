@@ -1,2 +1,44 @@
 # Scholarly
-A web-based study tracker built with Flask. Scholarly helps students organize, log, and visualize their study sessions and track progress over time. Features include dashboards, session management, and PDF export.
+
+Scholarly is a web-based study tracker built with Flask. It helps students organize, log, and visualize their study sessions, manage study logs, and track progress over time. The app features dashboards, session management, PDF export, and more. 
+
+**Note:** This app does not include user authentication or verification.
+
+## Features
+- Log and manage study sessions
+- Dashboard for visualizing study progress
+- Export study logs to PDF
+- Edit and delete sessions
+- Responsive user interface
+
+## Technologies Used & What I Learned
+
+### Python & Flask
+- Built the backend logic, routing, and session management.
+- Learned how to structure a Flask app, handle requests, and interact with SQLite databases.
+
+### HTML
+- Created the structure for all web pages (login, dashboard, study logs, etc.).
+- Learned semantic HTML and how to organize templates for Flask.
+
+### CSS
+- Styled the app for a clean, modern look.
+- Used custom styles and responsive layouts for usability.
+- Learned about CSS selectors, flexbox, and grid.
+
+### JavaScript
+- Added interactivity to the dashboard and forms.
+- Used JS for dynamic UI updates and client-side validation.
+- Learned DOM manipulation and event handling.
+
+### SQL (SQLite)
+- Managed user and session data with SQLite.
+- Learned SQL queries for CRUD operations and data analysis.
+
+### Other Libraries
+- Used FPDF for PDF export.
+- Used Matplotlib for data visualization.
+- Learned how to integrate third-party Python libraries into a Flask project.
+
+Haide
+
