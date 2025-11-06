@@ -40,5 +40,5 @@ Scholarly is a web-based study tracker built with Flask. It helps students organ
 - Used Matplotlib for data visualization.
 - Learned how to integrate third-party Python libraries into a Flask project.
 
-Haide
+Haider
 
